@@ -20,13 +20,14 @@ class ProcessorFunctions:
 
         matching_wavfiles = list()
         clean_filenames = [
-            file.split("/")[-1]
+            os.path.split(file)[-1]
             for file in glob.glob(os.path.join(clean_path, "*.wav"))
         ]
         noisy_filenames = [
-            file.split("/")[-1]
+            os.path.split(file)[-1]
             for file in glob.glob(os.path.join(noisy_path, "*.wav"))
         ]
+
         common_filenames = np.intersect1d(noisy_filenames, clean_filenames)
 
         for file_name in common_filenames:
@@ -37,6 +38,7 @@ class ProcessorFunctions:
             sr_noisy, noisy_file = wavfile.read(
                 os.path.join(noisy_path, file_name)
             )
+
             if (clean_file.shape[-1] == noisy_file.shape[-1]) and (
                 sr_clean == sr_noisy
             ):
@@ -57,7 +59,7 @@ class ProcessorFunctions:
 
         matching_wavfiles = list()
         clean_filenames = [
-            file.split("/")[-1]
+            os.path.split(file)[-1]
             for file in glob.glob(os.path.join(clean_path, "*.wav"))
         ]
         for clean_file in clean_filenames:
